@@ -6,6 +6,7 @@ import java.io.PrintStream;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by egalperi on 6/18/15.
@@ -36,7 +37,7 @@ public class TicTacToeGameTest {
     public void shouldAskPlayer1ForMoveWhenGameStarts() {
         game.start(board, playerInput);
 
-        verify(printStream).println("Player 1, What is your move?");
+        verify(printStream).println("Player 1, What is your move (Pick 1-9)?");
     }
 
     @Test
@@ -47,9 +48,12 @@ public class TicTacToeGameTest {
     }
 
     @Test
-    public void shouldMakePlayer1MoveWhenGameStartsAndMoveIsInputed() {
+    public void shouldMakePlayer1MoveWhenGameStarts() {
+        when(playerInput.getPlayerMove()).thenReturn(1);
+
         game.start(board, playerInput);
 
-        verify(board).addPlayerMove(1, 0);
+        verify(board).addPlayerMove(1, "Player1");
     }
+
 }

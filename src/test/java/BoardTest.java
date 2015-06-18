@@ -33,8 +33,17 @@ public class BoardTest {
 
     @Test
     public void shouldAddXToBoardAtPositionTwoWhenPlayerOnePicksThatSpot() {
-        board.addPlayerMove(2, 1);
+        board.addPlayerMove(2, "Player1");
 
+        assertEquals(board.getValueAtPosition(2), "X");
+    }
 
+    @Test
+    public void shouldDrawUpdatedBoardWhenPlayerHasMadeAMove() {
+        board.addPlayerMove(2, "Player1");
+
+        verify(printStream).println(" |X| ");
+        verify(printStream, times(2)).println(" | | ");
+        verify(printStream, times(2)).println("-----");
     }
 }

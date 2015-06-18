@@ -19,12 +19,14 @@ public class TicTacToeGame {
         Board board = new Board(printStream);
         TWAwesomeBufferedReader bufferedReader = new TWAwesomeBufferedReader(new InputStreamReader(System.in));
         PlayerInput playerInput = new PlayerInput(bufferedReader);
+
         game.start(board, playerInput);
     }
 
     public void start(Board board, PlayerInput playerInput) {
         board.drawBoard();
-        printStream.println("Player 1, What is your move?");
-        playerInput.getPlayerMove();
+        printStream.println("Player 1, What is your move (Pick 1-9)?");
+        int currentMove = playerInput.getPlayerMove();
+        board.addPlayerMove(currentMove, "Player1");
     }
 }
