@@ -14,13 +14,14 @@ import static org.mockito.Mockito.verify;
 public class BoardTest {
 
     private PrintStream printStream;
+    private String[] allPositions;
     private Board board;
 
     @Before
     public void setUp() {
         printStream = mock(PrintStream.class);
-        board = new Board(printStream);
-
+        allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
+        board = new Board(printStream, allPositions);
     }
 
     @Test
@@ -33,9 +34,10 @@ public class BoardTest {
 
     @Test
     public void shouldAddXToBoardAtPositionWhenPlayerOnePicksThatSpot() {
-        board.addPlayerMove(2, "Player1");
+        int move = 2;
+        board.addPlayerMove(move, "Player1");
 
-        assertEquals(board.getValueAtPosition(2), "X");
+        assertEquals(allPositions[move - 1], "X");
     }
 
     @Test
@@ -49,13 +51,14 @@ public class BoardTest {
 
     @Test
     public void shouldAddOToBoardAtPositionWhenPlayer2PicksThatSpot() {
-        board.addPlayerMove(2, "Player2");
+        int move = 2;
+        board.addPlayerMove(move, "Player2");
 
-        assertEquals(board.getValueAtPosition(2), "O");
+        assertEquals(allPositions[move-1], "O");
     }
 
     @Test
-    public void shouldPrintErrorMessageWhenPlayerChoosesTakenPosition() {
+    public void shouldPrintErrorMessageWhenPlayerTwoChoosesTakenPosition() {
         board.addPlayerMove(2, "Player1");
         board.addPlayerMove(2, "Player2");
 

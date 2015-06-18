@@ -16,7 +16,8 @@ public class TicTacToeGame {
     public static void main(String[] args) {
         PrintStream printStream = System.out;
         TicTacToeGame game = new TicTacToeGame(printStream);
-        Board board = new Board(printStream);
+        String[] placesForMoves = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
+        Board board = new Board(printStream, placesForMoves);
         TWAwesomeBufferedReader bufferedReader = new TWAwesomeBufferedReader(new InputStreamReader(System.in));
         PlayerInput playerInput = new PlayerInput(bufferedReader);
 

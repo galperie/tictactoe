@@ -9,10 +9,9 @@ public class Board {
     private PrintStream printStream;
     private String[] placesForMoves;
 
-    public Board(PrintStream printStream) {
+    public Board(PrintStream printStream, String[] placesForMoves) {
         this.printStream = printStream;
-        placesForMoves = new String[9];
-        Arrays.fill(placesForMoves, " ");
+        this.placesForMoves = placesForMoves;
     }
 
     public void drawBoard() {
@@ -24,16 +23,17 @@ public class Board {
     }
 
     public void addPlayerMove(int move, String player) {
-        if(player.equals("Player1")) {
-            placesForMoves[move-1] = "X";
+        if(placesForMoves[move-1].equals(" ")) {
+            if(player.equals("Player1")) {
+                placesForMoves[move-1] = "X";
+            }
+            if(player.equals("Player2")) {
+                placesForMoves[move-1] = "O";
+            }
+            drawBoard();
+        } else {
+            printStream.println("Location already taken");
         }
-        if(player.equals("Player2")) {
-            placesForMoves[move-1] = "O";
-        }
-        drawBoard();
     }
 
-    public String getValueAtPosition(int position) {
-        return placesForMoves[position-1];
-    }
 }
