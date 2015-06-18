@@ -1,5 +1,8 @@
 
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.PrintStream;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -9,13 +12,44 @@ import static org.mockito.Mockito.verify;
  */
 public class TicTacToeGameTest {
 
-    @Test
-    public void shouldDrawBoardWhenMainStarts() {
-        Board board = mock(Board.class);
-        TicTacToeGame game = new TicTacToeGame();
+    private Board board;
+    private TicTacToeGame game;
+    private PlayerInput playerInput;
+    private PrintStream printStream;
 
-        game.start(board);
+    @Before
+    public void setUp() {
+        board = mock(Board.class);
+        playerInput = mock(PlayerInput.class);
+        printStream = mock(PrintStream.class);
+        game = new TicTacToeGame(printStream);
+    }
+
+    @Test
+    public void shouldDrawBoardWhenGameStarts() {
+        game.start(board, playerInput);
 
         verify(board).drawBoard();
+    }
+
+    @Test
+    public void shouldAskPlayer1ForMoveWhenGameStarts() {
+        game.start(board, playerInput);
+
+        verify(printStream).println("Player 1, What is your move?");
+    }
+
+    @Test
+    public void shouldGetPlayerChosenMoveWhenGameStarts() {
+        game.start(board, playerInput);
+
+        verify(playerInput).getPlayerMove();
+    }
+
+    @Test
+    public void shouldMakePlayer1MoveWhenGameStartsAndMoveIsInputed() {
+        game.start(board, playerInput);
+
+        verify(board).addPlayerMove(1, 0);
     }
 }

@@ -1,3 +1,4 @@
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 /**
@@ -5,14 +6,25 @@ import java.io.PrintStream;
  */
 public class TicTacToeGame {
 
-    public static void main(String[] args) {
-        TicTacToeGame game = new TicTacToeGame();
-        PrintStream printStream = System.out;
-        Board board = new Board(printStream);
-        game.start(board);
+    private PrintStream printStream;
+
+    public TicTacToeGame(PrintStream printStream) {
+
+        this.printStream = printStream;
     }
 
-    public void start(Board board) {
+    public static void main(String[] args) {
+        PrintStream printStream = System.out;
+        TicTacToeGame game = new TicTacToeGame(printStream);
+        Board board = new Board(printStream);
+        TWAwesomeBufferedReader bufferedReader = new TWAwesomeBufferedReader(new InputStreamReader(System.in));
+        PlayerInput playerInput = new PlayerInput(bufferedReader);
+        game.start(board, playerInput);
+    }
+
+    public void start(Board board, PlayerInput playerInput) {
         board.drawBoard();
+        printStream.println("Player 1, What is your move?");
+        playerInput.getPlayerMove();
     }
 }

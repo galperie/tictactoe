@@ -18,4 +18,8 @@ public class Board {
         printStream.println("-----");
         printStream.println(" | | ");
     }
+
+    public void addPlayerMove(int player, int move) {
+
+    }
 }
