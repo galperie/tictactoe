@@ -56,4 +56,22 @@ public class TicTacToeGameTest {
         verify(board).addPlayerMove(1, "Player1");
     }
 
+    @Test
+    public void shouldAskPlayer2ForMoveAfterPlayer1WhenGameStarts() {
+        game.start(board, playerInput);
+
+        verify(printStream).println("Player 1, What is your move (Pick 1-9)?");
+        verify(printStream).println("Player 2, What is your move (Pick 1-9)?");
+    }
+
+    @Test
+    public void shouldMakePlayer2MoveAfterPlayer1WhenGameStarts() {
+        when(playerInput.getPlayerMove()).thenReturn(1);
+
+        game.start(board,playerInput);
+
+        verify(board).addPlayerMove(1, "Player1");
+        verify(board).addPlayerMove(1, "Player2");
+    }
+
 }

@@ -27,6 +27,9 @@ public class Board {
         if(player.equals("Player1")) {
             placesForMoves[move-1] = "X";
         }
+        if(player.equals("Player2")) {
+            placesForMoves[move-1] = "O";
+        }
         drawBoard();
     }
 

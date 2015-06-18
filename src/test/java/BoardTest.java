@@ -32,7 +32,7 @@ public class BoardTest {
     }
 
     @Test
-    public void shouldAddXToBoardAtPositionTwoWhenPlayerOnePicksThatSpot() {
+    public void shouldAddXToBoardAtPositionWhenPlayerOnePicksThatSpot() {
         board.addPlayerMove(2, "Player1");
 
         assertEquals(board.getValueAtPosition(2), "X");
@@ -45,5 +45,12 @@ public class BoardTest {
         verify(printStream).println(" |X| ");
         verify(printStream, times(2)).println(" | | ");
         verify(printStream, times(2)).println("-----");
+    }
+
+    @Test
+    public void shouldAddOToBoardAtPositionWhenPlayer2PicksThatSpot() {
+        board.addPlayerMove(2, "Player2");
+
+        assertEquals(board.getValueAtPosition(2), "O");
     }
 }

@@ -28,5 +28,9 @@ public class TicTacToeGame {
         printStream.println("Player 1, What is your move (Pick 1-9)?");
         int currentMove = playerInput.getPlayerMove();
         board.addPlayerMove(currentMove, "Player1");
+
+        printStream.println("Player 2, What is your move (Pick 1-9)?");
+        currentMove = playerInput.getPlayerMove();
+        board.addPlayerMove(currentMove, "Player2");
     }
 }
