@@ -8,16 +8,16 @@ import static org.mockito.Mockito.when;
 /**
  * Created by egalperi on 6/18/15.
  */
-public class PlayerInputTest {
+public class PlayerTest {
 
     @Test
     public void shouldGetMoveFromPlayerWhenItIsTheirTurn() {
         TWAwesomeBufferedReader bufferedReader = mock(TWAwesomeBufferedReader.class);
-        PlayerInput playerInput = new PlayerInput(bufferedReader);
+        Player player = new Player(bufferedReader);
 
         when(bufferedReader.readLine()).thenReturn("1");
 
-        int move = playerInput.getPlayerMove();
+        int move = player.move();
 
         assertEquals(move, 1);
     }

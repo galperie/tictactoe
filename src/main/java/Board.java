@@ -23,7 +23,8 @@ public class Board {
     }
 
     public void addPlayerMove(int move, String player) {
-        if(placesForMoves[move-1].equals(" ")) {
+
+        if(placesForMoves[move -1].equals(" ")) {
             if(player.equals("Player1")) {
                 placesForMoves[move-1] = "X";
             }
@@ -34,6 +35,20 @@ public class Board {
         } else {
             printStream.println("Location already taken");
         }
+
+        if(isBoardFull()) {
+            printStream.println("Game is a draw");
+        }
     }
 
+
+    public boolean isBoardFull() {
+        boolean isFull = true;
+        for(String s : placesForMoves) {
+            if(s.equals(" ")) {
+                isFull = false;
+            }
+        }
+        return isFull;
+    }
 }
