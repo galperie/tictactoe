@@ -53,4 +53,12 @@ public class BoardTest {
 
         assertEquals(board.getValueAtPosition(2), "O");
     }
+
+    @Test
+    public void shouldPrintErrorMessageWhenPlayerChoosesTakenPosition() {
+        board.addPlayerMove(2, "Player1");
+        board.addPlayerMove(2, "Player2");
+
+        verify(printStream).println("Location already taken");
+    }
 }
