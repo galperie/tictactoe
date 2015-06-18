@@ -11,10 +11,10 @@ public class TicTacToeGameTest {
 
     @Test
     public void shouldDrawBoardWhenMainStarts() {
-        Board board = new Board();
+        Board board = mock(Board.class);
         TicTacToeGame game = new TicTacToeGame();
 
-        game.start();
+        game.start(board);
 
         verify(board).drawBoard();
     }
