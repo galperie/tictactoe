@@ -6,35 +6,21 @@ import java.io.PrintStream;
 public class Player {
 
     private String name;
-    private TWAwesomeBufferedReader bufferedReader;
     private String marker;
     private PrintStream printStream;
     private Board board;
+    private PlayerInput playerInput;
 
-    public Player(String name, String marker, Board board, TWAwesomeBufferedReader bufferedReader, PrintStream printStream) {
+    public Player(String name, String marker, Board board, PlayerInput playerInput, PrintStream printStream) {
         this.name = name;
         this.board = board;
-        this.bufferedReader = bufferedReader;
+        this.playerInput = playerInput;
         this.marker = marker;
         this.printStream = printStream;
     }
 
-    public int getDesiredMove() {
-        printStream.println(name + ", What is your move (Pick 1-9)?");
-
-        String move = bufferedReader.readLine();
-
-        int moveAsInt = Integer.parseInt(move);
-
-        return moveAsInt;
-    }
-
     public void move() {
-        int desiredMove = getDesiredMove();
-
-        if(board.isTaken(desiredMove)) {
-            printStream.println("Location already taken, try again: ");
-        }
+        int desiredMove = playerInput.getPlayerMove(name);
 
         board.addMove(desiredMove, marker);
     }

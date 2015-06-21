@@ -11,57 +11,27 @@ import static org.mockito.Mockito.*;
  */
 public class PlayerTest {
 
-    private TWAwesomeBufferedReader bufferedReader;
     private PrintStream printStream;
     private Board board;
+    private PlayerInput playerInput;
+    private String name;
 
     @Before
     public void setup() {
-        bufferedReader = mock(TWAwesomeBufferedReader.class);
+        playerInput = mock(PlayerInput.class);
         printStream = mock(PrintStream.class);
         board = mock(Board.class);
-    }
-
-    @Test
-    public void shouldRecordWherePlayerWantsToMoveWhenMoving() {
-        Player player = new Player("Player 1", "X", board, bufferedReader, printStream);
-
-        when(bufferedReader.readLine()).thenReturn("1");
-
-        int move = player.getDesiredMove();
-
-        assertEquals(move, 1);
-    }
-
-    @Test
-    public void shouldAskPlayerWhereTheyWantToMoveWhenMoving() {
-        Player player = new Player("Player 1", "X", board, bufferedReader, printStream);
-        when(bufferedReader.readLine()).thenReturn("1");
-
-        player.move();
-
-        verify(printStream).println("Player 1, What is your move (Pick 1-9)?");
+        name = "Player 1";
     }
 
     @Test
     public void shouldMakeMoveOnBoardWhenMoving() {
-        Player player = new Player("Player 1", "X", board, bufferedReader, printStream);
-        when(bufferedReader.readLine()).thenReturn("3");
+        Player player = new Player("Player 1", "X", board, playerInput, printStream);
+        when(playerInput.getPlayerMove(name)).thenReturn(3);
 
         player.move();
 
         verify(board).addMove(3, "X");
     }
-
-    @Test
-    public void shouldMakeMoveAgainWhenMovingToPositionAlreadyTaken() {
-        Player player = new Player("Player 1", "X", board, bufferedReader, printStream);
-        when(bufferedReader.readLine()).thenReturn("3").thenReturn("3");
-
-        player.move();
-
-        verify(printStream).println(contains("Try Again:"));
-    }
-
 
 }

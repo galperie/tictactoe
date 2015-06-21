@@ -27,7 +27,18 @@ public class Board {
             draw();
     }
 
-    public boolean isTaken(int position) {
-        return !cells[position-1].equals(" ");
+    public boolean isValidMove(int position) {
+        return cells[position-1].equals(" ");
+    }
+
+    public boolean isFull() {
+        boolean isFull = true;
+
+        for (String cell : cells) {
+            if(cell.equals(" ")) {
+                isFull = false;
+            }
+        }
+        return isFull;
     }
 }

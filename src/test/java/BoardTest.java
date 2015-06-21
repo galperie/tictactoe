@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -67,7 +66,7 @@ public class BoardTest {
         allPositions = new String[]{"X", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        assertThat(board.isTaken(1), is(true));
+        assertThat(board.isValidMove(1), is(false));
     }
 
     @Test
@@ -75,7 +74,30 @@ public class BoardTest {
         allPositions = new String[]{"X", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        assertThat(board.isTaken(2), is(false));
+        assertThat(board.isValidMove(2), is(true));
     }
 
+    @Test
+    public void shouldSayBoardIsFullWhenCheckingIfBoardIsFullAndItIs() {
+        allPositions = new String[]{"X", "X", "X", "X", "X", "X", "X", "X", "X"};
+        board = new Board(printStream, allPositions);
+
+        assertThat(board.isFull(), is(true));
+    }
+
+    @Test
+    public void shouldSayBoardIsNotFullWhenCheckingIfBoardIsFullAndItIsEmpty() {
+        allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
+        board = new Board(printStream, allPositions);
+
+        assertThat(board.isFull(), is(false));
+    }
+
+    @Test
+    public void shouldSayBoardIsNotFullWhenCheckingIfBoardIsFullAndItHasSomeValues() {
+        allPositions = new String[]{"X", " ", "O", "O", "X", " ", " ", " ", " "};
+        board = new Board(printStream, allPositions);
+
+        assertThat(board.isFull(), is(false));
+    }
 }
