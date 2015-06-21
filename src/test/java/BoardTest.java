@@ -3,10 +3,11 @@ import org.junit.Test;
 
 import java.io.PrintStream;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -28,74 +29,53 @@ public class BoardTest {
         allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        board.drawBoard();
+        board.draw();
 
-        verify(printStream, times(3)).println(" | | ");
-        verify(printStream, times(2)).println("-----");
+        verify(printStream).println(" | | \n" +
+                                    "---------\n" +
+                                    " | | \n" +
+                                    "---------\n" +
+                                    " | | \n");
     }
 
     @Test
-    public void shouldAddXToBoardAtPositionWhenPlayerOnePicksThatSpot() {
-        allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
-        board = new Board(printStream, allPositions);
-        int move = 2;
-
-        board.addPlayerMove(move, "Player1");
-
-        assertEquals(allPositions[move - 1], "X");
-    }
-
-    @Test
-    public void shouldDrawUpdatedBoardWhenPlayerHasMadeAMove() {
+    public void shouldAddMarkerToBoardWhenMoving() {
         allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        board.addPlayerMove(2, "Player1");
+        board.addMove(3, "X");
 
-        verify(printStream).println(" |X| ");
-        verify(printStream, times(2)).println(" | | ");
-        verify(printStream, times(2)).println("-----");
+        assertEquals(allPositions[2], "X");
     }
 
     @Test
-    public void shouldAddOToBoardAtPositionWhenPlayer2PicksThatSpot() {
-        allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
-        board = new Board(printStream, allPositions);
-        int move = 2;
-
-        board.addPlayerMove(move, "Player2");
-
-        assertEquals(allPositions[move-1], "O");
-    }
-
-    @Test
-    public void shouldPrintErrorMessageWhenPlayerTwoChoosesTakenPosition() {
+    public void shouldDrawUpdatedBoardWhenAddingMove() {
         allPositions = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        board.addPlayerMove(2, "Player1");
-        board.addPlayerMove(2, "Player2");
+        board.addMove(2, "X");
 
-        verify(printStream).println("Location already taken");
+        verify(printStream).println(" |X| \n" +
+                "---------\n" +
+                " | | \n" +
+                "---------\n" +
+                " | | \n");
     }
 
     @Test
-    public void shouldPrintDrawWhenBoardIsFull() {
-        allPositions = new String[]{"X", "X", "X", "X", "X", "X", "X", "X", "X"};
+    public void shouldCheckPositionIsTakenWhenAddingMoveToTakenPosition() {
+        allPositions = new String[]{"X", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        board.addPlayerMove(9, "Player1");
-
-        verify(printStream).println(contains("Game is a draw"));
+        assertThat(board.isTaken(1), is(true));
     }
 
     @Test
-    public void shouldReturnTrueWhenBoardIsFull() {
-        allPositions = new String[]{"X", "X", "X", "X", "X", "X", "X", "X", ""};
+    public void shouldCheckPositionIsNotTakenWhenAddingMoveToNotTakenPosition() {
+        allPositions = new String[]{"X", " ", " ", " ", " ", " ", " ", " ", " "};
         board = new Board(printStream, allPositions);
 
-        board.addPlayerMove(9, "Player1");
-
-        assertEquals(board.isBoardFull(), true);
+        assertThat(board.isTaken(2), is(false));
     }
+
 }

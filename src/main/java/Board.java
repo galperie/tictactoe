@@ -1,5 +1,4 @@
 import java.io.PrintStream;
-import java.util.Arrays;
 
 /**
  * Created by egalperi on 6/18/15.
@@ -7,48 +6,28 @@ import java.util.Arrays;
 public class Board {
 
     private PrintStream printStream;
-    private String[] placesForMoves;
+    private String[] cells;
 
-    public Board(PrintStream printStream, String[] placesForMoves) {
+    public Board(PrintStream printStream, String[] cells) {
         this.printStream = printStream;
-        this.placesForMoves = placesForMoves;
+        this.cells = cells;
     }
 
-    public void drawBoard() {
-        printStream.println(placesForMoves[0] + "|" + placesForMoves[1] + "|" + placesForMoves[2]);
-        printStream.println("-----");
-        printStream.println(placesForMoves[3] + "|" + placesForMoves[4] + "|" + placesForMoves[5]);
-        printStream.println("-----");
-        printStream.println(placesForMoves[6] + "|" + placesForMoves[7] + "|" + placesForMoves[8]);
+    public void draw() {
+        printStream.println(
+                cells[0] + "|" + cells[1] + "|" + cells[2] + "\n"
+                + "---------" + "\n"
+                + cells[3] + "|" + cells[4] + "|" + cells[5] + "\n"
+                + "---------" + "\n"
+                + cells[6] + "|" + cells[7] + "|" + cells[8] + "\n");
     }
 
-    public void addPlayerMove(int move, String player) {
-
-        if(placesForMoves[move -1].equals(" ")) {
-            if(player.equals("Player1")) {
-                placesForMoves[move-1] = "X";
-            }
-            if(player.equals("Player2")) {
-                placesForMoves[move-1] = "O";
-            }
-            drawBoard();
-        } else {
-            printStream.println("Location already taken");
-        }
-
-        if(isBoardFull()) {
-            printStream.println("Game is a draw");
-        }
+    public void addMove(int move, String marker) {
+            cells[move-1] = marker;
+            draw();
     }
 
-
-    public boolean isBoardFull() {
-        boolean isFull = true;
-        for(String s : placesForMoves) {
-            if(s.equals(" ")) {
-                isFull = false;
-            }
-        }
-        return isFull;
+    public boolean isTaken(int position) {
+        return !cells[position-1].equals(" ");
     }
 }
